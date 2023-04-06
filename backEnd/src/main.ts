@@ -1,24 +1,46 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter'
+/**
+ * @fileoverview Bus Ticket Sale System
+ * 
+ * Allows for searching for trips, selling tickets, modifying a ticket or
+ * cancelling a sale.
+ */
+// imports
+import * as dotenv from 'dotenv';
+dotenv.config();
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import cookieParser from 'cookie-parser';
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+// Custom import
+import corsOptions from './config/CORS/corsOptions';
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+// Declaración de variables
+const server = express();
+const PORT = process.env.PORT || 8009;
+
+// Middleware Setup
+server.use(cors(corsOptions));
+server.use(express.json());
+server.use(cookieParser());
+
+// Static file serve
+const publicDir = path.join(__dirname, 'public');
+server.use('/static', express.static(publicDir));
+
+// Router
+// Unverified Routes
+server.use('/', require('./src/routes/root'));
+server.use('/user', require('./src/routes/userRoutes'));
+server.use('/logout', require('./src/routes/logout'));
+server.use('/resources', require('./src/routes/hallRoute'));
+
+// CRUD
+server.use('/ticket', require('./src/routes/ticketRoute'));
+
+// Verified Routes
+server.use('/admin', require('./src/routes/adminRoutes'));
+server.use('/auth', require('./src/routes/refresh'));
+server.use('/refresh', require('./src/routes/refresh'));
+
+server.listen(PORT, () => console.log(`Server running on port ${PORT}.`));

@@ -9,7 +9,7 @@ router.route('/tickets/all')
 router.route('/tickets/:owner')
   .get(ticketsController.getByOwner);
 
-router.route('/tickets/buy')
+router.route('/tickets')
   .post(ticketsController.sale);
 
 router.route('/tickets')

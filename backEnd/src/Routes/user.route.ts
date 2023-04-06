@@ -3,19 +3,19 @@ import userController from '../controllers/user.controller';
 
 const router = express.Router();
 
-router.route('/user')
+router.route('/user/:id')
   .get(userController.info);
 
-router.route('/new')
+router.route('/user/new')
   .post(userController.register);
 
-router.route('/auth')
+router.route('/user/auth')
   .post(userController.auth);
 
-router.route('/email')
+router.route('/user')
   .patch(userController.modify);
 
-router.route('/user')
+router.route('/user/:id')
   .patch(userController.del);
 
 module.exports = router;

@@ -4,28 +4,40 @@
  * Main controller, allows searching for bought tickets, seats and changing
  * already bought tickets.
  */
-import * as argon2 from 'argon2';
 import conn from '../config/MYSQL/Connector';
 
-const getAll = (request: any, response: any) => {
+const ValidateToken = (token: string) => {
+  console.log(token);
+  return true;
+}
+
+const getAll = async (request: any, response: any) => {
   const { token } = request.body;
 
-  return response.status(200);
+  if (!ValidateToken(token)) return response.status(400);
+  const connection = await conn();
+  const user = await connection.query('CALL users()');
+
+  return response.json({ "user": user});
 }
 
 const getByOwner = (request: any, response: any) => {
+  console.log(request);
   return response.status(200);
 }
 
 const sale = (request: any, response: any) => {
+  console.log(request);
   return response.status(200);
 }
 
 const modify = (request: any, response: any) => {
+  console.log(request);
   return response.status(204);
 }
 
 const cancel = (request: any, response: any) => {
+  console.log(request);
   return response.status(204);
 }
 

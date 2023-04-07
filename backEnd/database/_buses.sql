@@ -32,8 +32,7 @@ CREATE TABLE `bus` (
   `home` varchar(25) NOT NULL,
   `home_datetime` datetime NOT NULL,
   `destination` varchar(25) NOT NULL,
-  `destination_datetime` datetime NOT NULL,
-  `id_ticket` int(11) NOT NULL
+  `destination_datetime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -45,7 +44,7 @@ CREATE TABLE `bus` (
 CREATE TABLE `tickets` (
   `id` int(11) NOT NULL,
   `id_bus` int(11) NOT NULL,
-  `n. tickets` int(11) DEFAULT NULL
+  `id_users` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -57,10 +56,9 @@ CREATE TABLE `tickets` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `name` text NOT NULL,
-  `last name` text DEFAULT NULL,
-  `password` varchar(15) NOT NULL,
-  `telefono` text DEFAULT NULL,
-  `n. ticket` int(11) NOT NULL
+  `last_name` text DEFAULT NULL,
+  `password` varchar(85) NOT NULL,
+  `telefono` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -71,9 +69,7 @@ CREATE TABLE `users` (
 -- Indices de la tabla `bus`
 --
 ALTER TABLE `bus`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id_user_2` (`id_ticket`),
-  ADD KEY `id_user` (`id_ticket`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `tickets`
@@ -81,14 +77,13 @@ ALTER TABLE `bus`
 ALTER TABLE `tickets`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_bus` (`id_bus`),
-  ADD KEY `num. tickets` (`n. tickets`);
+  ADD KEY `id_users` (`id_users`);
 
 --
 -- Indices de la tabla `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `tickets` (`n. ticket`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -107,9 +102,6 @@ ALTER TABLE `users`
 --
 -- Filtros para la tabla `bus`
 --
-ALTER TABLE `bus`
-  ADD CONSTRAINT `bus_ibfk_1` FOREIGN KEY (`id_ticket`) REFERENCES `tickets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
 --
 -- Filtros para la tabla `tickets`
 --
@@ -119,15 +111,20 @@ ALTER TABLE `tickets`
 --
 -- Filtros para la tabla `users`
 --
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`n. ticket`) REFERENCES `tickets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
+
 
  
 DELIMITER $$
 CREATE PROCEDURE users(in idu int)
 BEGIN
     SELECT * FROM users where id=idu;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE allusers()
+BEGIN
+    SELECT * FROM users;
 END$$
 DELIMITER ;
 
@@ -148,7 +145,7 @@ DELIMITER ;
 DELIMITER $$
 create procedure trips(in idu int)
 begin 
-	select * from tickets where `num. tickets`=(select id from users where id=idu);
+	select * from tickets where `id_users`=(select id from users where id=idu);
 end$$
 DELIMITER ;
 
@@ -156,14 +153,14 @@ DELIMITER $$
 create procedure sale(in `i` int(11),`bus` int(11),`tickets` int(11), idu int)
 begin 
 	insert into tickets values (`i`,`bus`,`tickets`);
-    update users set `n. ticket`= tickets where id=idu;
+    update users set `n_ticket`= tickets where id=idu;
 end$$
 DELIMITER ;
 
 DELIMITER $$
 create procedure `modify`(in `i` int(11),`bus` int(11),`tickets` int(11))
 begin 
-	update tickets set id_bus=bus, `num. tickets`=tickets where id=i;
+	update tickets set id_bus=bus, `id_users`=tickets where id=i;
 end$$
 DELIMITER ;
 

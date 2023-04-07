@@ -106,7 +106,9 @@ ALTER TABLE `users`
 -- Filtros para la tabla `tickets`
 --
 ALTER TABLE `tickets`
-  ADD CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`id_bus`) REFERENCES `bus` (`id`);
+  ADD CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`id_bus`) REFERENCES `bus` (`id`),
+  ADD CONSTRAINT `tickets_ibfk_2` FOREIGN KEY (`id_users`) REFERENCES `users` (`id`);
+
 
 --
 -- Filtros para la tabla `users`

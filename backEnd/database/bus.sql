@@ -58,6 +58,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `users` (IN `idu` INT)   BEGIN
     SELECT * FROM users where id=idu;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `seatsbyuser` (IN `idu` INT)   BEGIN
+    SELECT * FROM seats where id=(select id from users where id=idu);
+END$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------

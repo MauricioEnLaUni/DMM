@@ -35,6 +35,24 @@ const uniqueUsername = async (usr: string, conn: any) => {
   return true;
 }
 
+const updateLastName = async (id: number, name: string, conn: any) => {
+  await conn.query('UPDATE `users` SET `last_name` = (?) WHERE id = (?)',
+      [name, id]);
+}
+
+const updatePassword = async (id: number, password: string, conn: any) => {
+  const newPwd = argon2.hash(password);
+  await conn.query('UPDATE `users` SET `password` = (?) WHERE id = (?)',
+      [newPwd, id]);
+}
+
+const updatePhone = async (id: number, phone: string, conn: any) => {
+  await conn.query('UPDATE `users` SET `telefono` = (?) WHERE id = (?)',
+      [phone, id]);
+}
+
+const update = [updateLastName, updatePassword, updatePhone];
+
 const register = async (request: any, response: any) => {
   const { username, password } = request.body;
 
@@ -64,16 +82,46 @@ const auth = async (request: any, response: any) => {
   return response.json({ "userInfo": output});
 }
 
-const modify = (request: any, response: any) => {
-  const { token } = request.body;
-  ValidateToken(token);
-  console.log(request);
+class UserUpdateDto {
+  id: number;
+  field: Array<number>;
+  changes: Array<any>;
+  token: string;
+
+  constructor(id: number, field: Array<number>, changes: Array<any>, token: string)
+  {
+    this.id = id;
+    this.field = field;
+    this.changes = changes;
+    this.token = token;
+  }
+}
+
+const modify = async (request: any, response: any) => {
+  const { req }: { req: UserUpdateDto } = request.body;
+  if (!ValidateToken(req.token))
+      return response
+          .status(401)
+          .json({ message: "Inicie sesión para realizar cambios."});
+
+  const connection = await conn();
+
+  req.changes.forEach((e, i) => {
+    update[req.field[i]](req.id, e, connection);
+  })
   return response.status(204);
 }
 
-const del = (request: any, response: any) => {
-  console.log(request);
-  return response.status(204);
+const del = async (request: any, response: any) => {
+  const { token, id } = request.body;
+  if (!ValidateToken(token))
+      return response
+          .status(401)
+          .json({ message: "Inicie sesión para realizar cambios."});
+
+  const connection = await conn();
+  await connection.query('DELETE FROM `users` WHERE `id` = (?)', id);
+  return response.status(204).json({ message: `Usuario con id de ${id} ha sido eliminado.`});
 }
 
 export default

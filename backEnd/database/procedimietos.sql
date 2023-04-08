@@ -7,10 +7,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `allusers` ()   BEGIN
     SELECT * FROM users;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `usersbyname` (in `nam` text)   BEGIN
-    SELECT * FROM users where name=nam;
-END$$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `buses` ()   begin 
 	select * from bus;
 end$$
@@ -32,6 +28,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sale` (IN `i` INT(11), `bus` INT(11
     update users set `n_ticket`= tickets where id=idu;
 end$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `seatsbyuser` (IN `idu` INT)   BEGIN
+    SELECT * FROM seats where id=(select id from users where id=idu);
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `trips` (IN `idu` INT)   begin 
 	select * from tickets where `id_users`=(select id from users where id=idu);
 end$$
@@ -40,8 +40,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `users` (IN `idu` INT)   BEGIN
     SELECT * FROM users where id=idu;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `seatsbyuser` (IN `idu` INT)   BEGIN
-    SELECT * FROM seats where id=(select id from users where id=idu);
+CREATE DEFINER=`root`@`localhost` PROCEDURE `usersbyname` (IN `nam` TEXT)   BEGIN
+    SELECT * FROM users where name=nam;
 END$$
 
 DELIMITER ;

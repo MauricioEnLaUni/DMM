@@ -1,4 +1,3 @@
-
 --
 -- Indices de la tabla `bus`
 --
@@ -13,6 +12,14 @@ ALTER TABLE `seats`
   ADD KEY `id_bus` (`id_bus`);
 
 --
+-- Indices de la tabla `seats/travel`
+--
+ALTER TABLE `seats/travel`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_seats` (`id_seats`),
+  ADD KEY `id_travel` (`id_travel`);
+
+--
 -- Indices de la tabla `tickets`
 --
 ALTER TABLE `tickets`
@@ -21,10 +28,17 @@ ALTER TABLE `tickets`
   ADD KEY `id_users` (`id_users`);
 
 --
+-- Indices de la tabla `travel`
+--
+ALTER TABLE `travel`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`) USING HASH;
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -37,14 +51,17 @@ ALTER TABLE `seats`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `travel`
+--
+ALTER TABLE `travel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE `users` 
-    ADD UNIQUE(`name`);
-  
 --
 -- Restricciones para tablas volcadas
 --
@@ -54,6 +71,13 @@ ALTER TABLE `users`
 --
 ALTER TABLE `seats`
   ADD CONSTRAINT `seats_ibfk_1` FOREIGN KEY (`id_bus`) REFERENCES `bus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `seats/travel`
+--
+ALTER TABLE `seats/travel`
+  ADD CONSTRAINT `seats/travel_ibfk_1` FOREIGN KEY (`id_seats`) REFERENCES `seats` (`id`),
+  ADD CONSTRAINT `seats/travel_ibfk_2` FOREIGN KEY (`id_travel`) REFERENCES `travel` (`id`);
 
 --
 -- Filtros para la tabla `tickets`

@@ -4,12 +4,10 @@
 from sys import stdout
 from datetime import datetime, timedelta
 from random import randint
-from wonderwords import RandomWord
 
 class BusPopulator:
     """Creates a Bus item to populate the database."""
     or_stdout = stdout
-    r = RandomWord()
 
     def to_file(self, x, y):
         """Writes output to file."""

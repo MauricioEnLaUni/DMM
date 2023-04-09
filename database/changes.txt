@@ -1,3 +1,25 @@
+CREATE TABLE `trip` (
+  `id` int NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `home` varchar(50) NOT NULL,
+  `departure` DATETIME NOT NULL,
+  `destination` varchar(50) NOT NULL,
+  `arrival` DATETIME NOT NULL,
+  `seats` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+DROP TABLE `travel`;
+
+ALTER TABLE `travel` ADD PRIMARY KEY (`id`);
+ALTER TABLE `travel` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+DELIMITER $$
+CREATE PROCEDURE `buses`()
+BEGIN
+	SELECT * FROM `trip`;
+end$$
+DELIMITER ;
+
 INSERT INTO TRAVEL VALUES(NULL, "Aguascalientes - Calvillo", "Aguascalientes, Aguascalientes", "2023-04-11 16:45:02.215531", "Calvillo, Aguascalientes", "2023-04-11 17:30:02.215531", 48),
 (NULL, "Aguascalientes - San Juan de los Lagos", "Aguascalientes, Aguascalientes", "2023-04-09 10:48:02.215531", "San Juan de los Lagos, Jalisco", "2023-04-09 11:53:02.215531", 48),
 (NULL, "Aguascalientes - San Luis Potosí", "Aguascalientes, Aguascalientes", "2023-04-08 23:29:02.215531", "San Luis Potosí, San Luis Potosí", "2023-04-09 01:49:02.215531", 65),

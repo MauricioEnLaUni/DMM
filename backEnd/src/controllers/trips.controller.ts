@@ -26,14 +26,15 @@ const getAll = async (request: any, response: any) => {
 }
 
 const getSeats = async (request: any, response: any) => {
-  const { token, trip } = request.body;
+  const { token } = request.body;
+  const trip = request.params.id;
   if (!ValidateToken(token))
       return response
           .status(401)
           .json({ message: "Inicie sesión para continuar."});
 
   const connection = await conn();
-  const rawSeats: any = await connection.query('CALL `seatsByTrip`((?))', trip);
+  const rawSeats: any = await connection.query('CALL `seatsByTrip`((?));', trip);
   const seats = rawSeats[0][0];
   return response.status(200).json({ seats: seats });
 }

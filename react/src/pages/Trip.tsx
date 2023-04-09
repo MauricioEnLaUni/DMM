@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 
 // MUI
-import Box from '@mui/material/Box';
+import { Box } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 // Fictichos
@@ -48,7 +48,7 @@ const columns: GridColDef[] = [
   }
 ];
 
-const Test = () => {
+const Trip = () => {
   const [trips, setTrips] = useState<Array<Bus>>([]);
 
   useEffect(() => {
@@ -85,4 +85,4 @@ const Test = () => {
   );
 }
 
-export default Test;
+export default Trip;

@@ -7,13 +7,17 @@ import { Route, Routes } from 'react-router-dom';
 // Fictichos
 import './App.css';
 import Layout from './component/Layout';
-import Test from './pages/Test';
+import Trip from './pages/Trip';
+import Seats from './pages/Seat';
 
 const App = () => {
+  const [chosen, setChosen] = useState(35);
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route path="test" element={<Test />} />
+        <Route path="trip" element={<Trip />} />
+        <Route path="seat" element={<Seats id={chosen}/>} />
       </Route>
     </Routes>
   );

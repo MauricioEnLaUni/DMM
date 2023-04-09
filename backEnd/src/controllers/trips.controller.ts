@@ -19,7 +19,7 @@ const getAll = async (request: any, response: any) => {
           .json({ message: "Inicie sesión para continuar."});
 
   const connection = await conn();
-  const rawBus: any = await connection.query('CALL `buses`()');
+  const rawBus: any = await connection.query('CALL `buses`()'); 
   const output: any = rawBus[0][0];
 
   return response.status(200).json({ buses: output });

@@ -1,24 +1,24 @@
 import express from 'express';
 import tripsController from '../controllers/trips.controller';
 
-const router = express.Router();
+const tripsRouter = express.Router();
 
-router.route('/trips')
+tripsRouter.route('/')
   .get(tripsController.getAll);
 
-router.route('/trips/:id')
+tripsRouter.route('/:id')
   .get(tripsController.getSeats);
 
-router.route('/trips')
+tripsRouter.route('/')
   .post(tripsController.newTrip);
 
-router.route('/trips')
+tripsRouter.route('/')
   .put(tripsController.replace);
 
-router.route('/trips')
+tripsRouter.route('/')
   .patch(tripsController.modify);
 
-router.route('/trips')
+tripsRouter.route('/')
   .delete(tripsController.cancel);
 
-module.exports = router;
+export default tripsRouter;

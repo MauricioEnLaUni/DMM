@@ -1,21 +1,21 @@
 import express from 'express';
 import ticketsController from '../controllers/tickets.controller';
 
-const router = express.Router();
+const ticketsRouter = express.Router();
 
-router.route('/tickets/all')
+ticketsRouter.route('/')
   .get(ticketsController.getAll);
 
-router.route('/tickets/:owner')
+ticketsRouter.route('/:owner')
   .get(ticketsController.getByOwner);
 
-router.route('/tickets')
+ticketsRouter.route('/')
   .post(ticketsController.sale);
 
-router.route('/tickets')
+ticketsRouter.route('/')
   .patch(ticketsController.modify);
 
-router.route('/tickets')
+ticketsRouter.route('/')
   .delete(ticketsController.cancel);
 
-module.exports = router;
+export default ticketsRouter;

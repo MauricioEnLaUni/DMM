@@ -17,6 +17,7 @@ import corsOptions from './src/config/CORS/corsOptions';
 // Routes
 import userRouter from './src/Routes/user.route';
 import tripsRouter from './src/Routes/trips.route';
+import ticketsRouter from './src/Routes/tickets.route';
 
 // Declaración de variables
 const server = express();
@@ -31,5 +32,6 @@ server.use(cookieParser());
 // Unverified Routes
 server.use('/user', userRouter);
 server.use('/trip', tripsRouter);
+server.use('/tickets', ticketsRouter);
 
 server.listen(PORT, () => console.log(`Server running on port ${PORT}.`));

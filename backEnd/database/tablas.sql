@@ -1,4 +1,3 @@
-
 --
 -- Estructura de tabla para la tabla `bus`
 --
@@ -33,7 +32,7 @@ CREATE TABLE `features` (
 CREATE TABLE `seats` (
   `id` int(11) NOT NULL,
   `number` int(11) NOT NULL,
-  `id_bus` int(11) NOT NULL
+  `assigned` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -44,7 +43,7 @@ CREATE TABLE `seats` (
 
 CREATE TABLE `seats_trip` (
   `id_seats` int(11) NOT NULL,
-  `id_travel` int(11) NOT NULL
+  `id_trip` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -78,8 +77,6 @@ CREATE TABLE `trip` (
   `arrival` datetime NOT NULL,
   `seats` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `users`

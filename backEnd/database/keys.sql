@@ -1,3 +1,4 @@
+--
 -- Estructura para la vista `trips`
 --
 DROP TABLE IF EXISTS `trips`;
@@ -24,15 +25,14 @@ ALTER TABLE `features`
 -- Indices de la tabla `seats`
 --
 ALTER TABLE `seats`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_bus` (`id_bus`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `seats_trip`
 --
 ALTER TABLE `seats_trip`
   ADD KEY `id_seats` (`id_seats`),
-  ADD KEY `id_travel` (`id_travel`);
+  ADD KEY `id_travel` (`id_trip`);
 
 --
 -- Indices de la tabla `tickets`
@@ -102,17 +102,11 @@ ALTER TABLE `features`
   ADD CONSTRAINT `features_ibfk_1` FOREIGN KEY (`id_bus`) REFERENCES `bus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `seats`
---
-ALTER TABLE `seats`
-  ADD CONSTRAINT `seats_ibfk_1` FOREIGN KEY (`id_bus`) REFERENCES `bus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Filtros para la tabla `seats_trip`
 --
 ALTER TABLE `seats_trip`
   ADD CONSTRAINT `seats_trip_ibfk_1` FOREIGN KEY (`id_seats`) REFERENCES `seats` (`id`),
-  ADD CONSTRAINT `seats_trip_ibfk_2` FOREIGN KEY (`id_travel`) REFERENCES `trip` (`id`);
+  ADD CONSTRAINT `seats_trip_ibfk_2` FOREIGN KEY (`id_trip`) REFERENCES `trip` (`id`);
 
 --
 -- Filtros para la tabla `tickets`

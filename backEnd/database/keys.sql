@@ -1,11 +1,4 @@
 --
--- Estructura para la vista `trips`
---
-DROP TABLE IF EXISTS `trips`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `trips`  AS SELECT `trip`.`id` AS `id`, `trip`.`name` AS `name`, `trip`.`home` AS `home`, `trip`.`departure` AS `departure`, `trip`.`destination` AS `destination`, `trip`.`arrival` AS `arrival`, `trip`.`seats` AS `seats` FROM `trip` WHERE `trip`.`departure` > current_timestamp() AND `trip`.`departure` <= current_timestamp() + interval 10 minute LIMIT 0, 2525  ;
-
---
 -- Índices para tablas volcadas
 --
 
@@ -25,7 +18,8 @@ ALTER TABLE `features`
 -- Indices de la tabla `seats`
 --
 ALTER TABLE `seats`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_trip` (`id_trip`);
 
 --
 -- Indices de la tabla `seats_trip`
@@ -83,7 +77,7 @@ ALTER TABLE `seats`
 -- AUTO_INCREMENT de la tabla `trip`
 --
 ALTER TABLE `trip`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=169;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
@@ -100,6 +94,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `features`
   ADD CONSTRAINT `features_ibfk_1` FOREIGN KEY (`id_bus`) REFERENCES `bus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `seats`
+--
+ALTER TABLE `seats`
+  ADD CONSTRAINT `seats_ibfk_1` FOREIGN KEY (`id_trip`) REFERENCES `trip` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `seats_trip`

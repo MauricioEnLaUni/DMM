@@ -6,12 +6,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `allusers` ()   BEGIN
     SELECT * FROM users;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `buses` ()   begin 
-	select * from trip;
-end$$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `cancel` (IN `i` INT(11))   begin 
-	delete from users_bus where id_user=i;
+	delete from tickets where id=i;
 end$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_user` (`na` TEXT, `pass` VARCHAR(15))   begin
@@ -22,13 +18,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `modify` (IN `i` INT(11), IN `bus` I
 	update users_bus set id_bus=bus where `id_users`=user;
 end$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sale` (`i` INT, `bus` INT)   begin 
-   insert into users_bus values (id_user= i, id_bus= bus);
-end$$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `seatsbyuser` (IN `idu` INT)   BEGIN
     SELECT * FROM seats where id=(select id from users where id=idu);
 END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `trip` ()   begin 
+	select * from trip;
+end$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `trips` ()   BEGIN
     SELECT * FROM TRIP WHERE (SELECT DATE_ADD(NOW(), INTERVAL 10 MINUTE_SECOND))limit 25;

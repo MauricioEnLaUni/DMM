@@ -9,11 +9,11 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import axios from '../api/axios';
 
 const Name = (params: any) => {
-  return `${params.row.home || ''} - ${params.row.destination || ''}`;
+  return `${params.row.home_city || ''} - ${params.row.destination_city || ''}`;
 }
 
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', width: 75 },
+  { field: 'id', headerName: 'ID', width: 50 },
   {
     field: 'name',
     headerName: 'Corrida',
@@ -21,9 +21,14 @@ const columns: GridColDef[] = [
     width: 300,
   },
   {
-    field: 'home',
-    headerName: 'Origen',
-    width: 250,
+    field: 'home_city',
+    headerName: 'Ciudad origen',
+    width: 150,
+  },
+  {
+    field: 'home_state',
+    headerName: 'Estado origen',
+    width: 150,
   },
   {
     field: 'departure',
@@ -31,20 +36,25 @@ const columns: GridColDef[] = [
     width: 220,
   },
   {
-    field: 'destination',
-    headerName: 'Destino',
-    width: 250,
+    field: 'destination_city',
+    headerName: 'Ciudad de destino',
+    width: 150,
+  },
+  {
+    field: 'destination_state',
+    headerName: 'Estado De destino',
+    width: 150,
   },
   {
     field: 'arrival',
     headerName: 'Llegada',
-    width: 220,
+    width: 200,
   },
   {
     field: 'seats',
     headerName: 'Asientos',
     type: 'number',
-    width: 70,
+    width: 75,
   }
 ];
 
@@ -68,7 +78,7 @@ const Trip = () => {
   }, [trips]);
 
   return(
-    <Box sx={{ height: 400, width: '100%' }}>
+    <Box sx={{ height: 400, width: '100%', backgroundColor: 'grey', borderRadius: 10, borderColor: "grey", boxShadow: "none" }}>
       <DataGrid
         rows={trips}
         columns={columns}

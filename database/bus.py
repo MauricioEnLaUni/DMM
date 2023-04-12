@@ -32,7 +32,8 @@ class BusPopulator:
         ]
 
         temp = randint(0,11)
-        return cities[temp]
+        city, state = cities[temp][0].split(', ')
+        return (city, state, cities[temp][1])
 
     def get_date(self):
         """Creates a random date."""

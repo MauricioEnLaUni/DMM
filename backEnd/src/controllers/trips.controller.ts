@@ -19,8 +19,9 @@ const getAll = async (request: any, response: any) => {
           .json({ message: "Inicie sesión para continuar."});
 
   const connection = await conn();
-  const rawBus: any = await connection.query('CALL `buses`()'); 
+  const rawBus: any = await connection.query('CALL `trips`()');
   const output: any = rawBus[0][0];
+  console.log(output);
 
   return response.status(200).json({ buses: output });
 }
@@ -79,6 +80,8 @@ const cancel = (request: any, response: any) => {
   
   return response.status(204);
 }
+
+
 
 export default
 {

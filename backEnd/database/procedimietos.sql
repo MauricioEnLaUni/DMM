@@ -7,7 +7,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `allusers` ()   BEGIN
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `buses` ()   begin 
-	select * from bus;
+	select * from trip;
 end$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `cancel` (IN `i` INT(11))   begin 
